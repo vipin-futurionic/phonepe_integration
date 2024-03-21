@@ -3,7 +3,8 @@ const axios = require("axios");
 const uniqid = require("uniqid");
 const crypto = require("crypto");
 
-const makePayment = async () => {
+const generatePaymentUrl = async (amount) => {
+
     try {
         const payEndPoint = "/pg/v1/pay";
         const merchantTransactionId = uniqid();
@@ -12,7 +13,7 @@ const makePayment = async () => {
             merchantId: process.env.MERCHANT_ID,
             merchantTransactionId: merchantTransactionId,
             merchantUserId: userID,
-            amount: 300000000,
+            amount: Math.ceil(amount * 100), // amount should be in INR (INDIAN Rupees) so multiplying it by 100 to make it an integer value of paise (1 INR = 100 paise)
             redirectUrl: `http://localhost:3000/redirect-url/${merchantTransactionId}`,
             redirectMode: "REDIRECT",
             mobileNumber: "9999999999",
@@ -51,5 +52,5 @@ const makePayment = async () => {
 };
 
 module.exports = {
-    makePayment,
+    generatePaymentUrl,
 };
