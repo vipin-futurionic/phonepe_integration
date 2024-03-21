@@ -45,6 +45,9 @@ const generatePaymentUrl = async (amount) => {
         console.log(response.data);
         const url = response.data.data.instrumentResponse.redirectInfo.url;
         return url;
+
+
+        
     } catch (error) {
         console.error("Error making payment:", error);
         throw new Error("Payment failed");

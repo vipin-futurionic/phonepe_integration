@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 
 router.get('^/$|/index(.html)?', (req, res) => {
-    res.send("PhonePe Index Page");
+    res.json({ "message": "Welcome to PhonePe" });
 });
 
 module.exports = router;

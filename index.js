@@ -1,9 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const uniqid = require("uniqid");
 const app = express();
 const port = 3000;
-const crypto = require("crypto");
 
 
 app.use(express.static("public"));
