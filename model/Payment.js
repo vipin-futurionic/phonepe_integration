@@ -2,10 +2,7 @@
 const sequelize = require('sequelize');
 const db = require('../config/database.js');
 
-const sequelize = require('sequelize');
-const db = require('../config/database');
-
-const Gig = db.define(
+const Transaction = db.define(
     'transaction',
     {
         merchantId: {
@@ -28,4 +25,4 @@ const Gig = db.define(
 );
 
 
-module.exports = Gig;
+module.exports = Transaction;
