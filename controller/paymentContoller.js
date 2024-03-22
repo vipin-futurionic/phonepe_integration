@@ -14,8 +14,8 @@ const makePayment = async (req, res) => {
     console.log(amount);
     try {
         const paymentUrl = await paymentService.generatePaymentUrl(amount);
-        res.redirect(paymentUrl);
-        // res.json({ "paymentUrl": paymentUrl });
+        // res.redirect(paymentUrl);
+        res.json({ "paymentUrl": paymentUrl });
     } catch (error) {
         console.error("Error in making payment:", error);
         res.status(500).json({ error: "Payment failed" });
