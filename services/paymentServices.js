@@ -41,6 +41,7 @@ const generatePaymentUrl = async (amount) => {
 
         const response = await axios.request(options);
         console.log(response.data);
+
         const url = response.data.data.instrumentResponse.redirectInfo.url;
         return url;
 
@@ -58,7 +59,7 @@ const checkPaymentStatus = async (merchantTransactionId) => {
 
         const string = `/pg/v1/status/${process.env.MERCHANT_ID}/${merchantTransactionId}${process.env.SALT_KEY}`;
         const sha256 = crypto.createHash('sha256').update(string).digest('hex');
-        const xverify = sha256 + "###" + process.env.SALT_INDEX;
+        const xverify = sha256 + "###"  + process.env.SALT_INDEX;
 
         const options = {
             method: 'GET',
@@ -74,6 +75,7 @@ const checkPaymentStatus = async (merchantTransactionId) => {
         const response = await axios.request(options);
 
         if (response.data.success === true) {
+
             return response.data;
         } else {
             throw new Error("Payment status check failed");
