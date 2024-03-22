@@ -1,14 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const paymentController = require('../../controller/paymentRedirectController');
 
-router.get("/:merchantTransactionId", (req, res) => {
-    const { merchantTransactionId } = req.params;
-    console.log(merchantTransactionId);
-    if (merchantTransactionId) {
-        res.send(merchantTransactionId);
-    } else {
-        res.send("Merchant Transaction Id not found");
-    }
-});
+
+router.get("/:merchantTransactionId", paymentController.checkStatus);
 
 module.exports = router;
+
+
+
