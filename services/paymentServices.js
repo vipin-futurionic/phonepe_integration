@@ -1,13 +1,16 @@
 const axios = require("axios");
 const uniqid = require("uniqid");
 const crypto = require("crypto");
+const Transaction = require('../model/Payment');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 const generatePaymentUrl = async (amount) => {
 
     try {
         const payEndPoint = "/pg/v1/pay";
         const merchantTransactionId = uniqid();
-        const userID = "1234";
+        // const userID = "1234";
         const data = {
             merchantId: process.env.MERCHANT_ID,
             merchantTransactionId: merchantTransactionId,
@@ -39,9 +42,17 @@ const generatePaymentUrl = async (amount) => {
             },
         };
 
+
+        await Transaction.create({
+            merchantId: process.env.MERCHANT_ID,
+            merchantTransactionId: merchantTransactionId,
+            transactionId: merchantTransactionId,
+            amount: Math.ceil(amount * 100),
+            status: "Pending",
+        });
+
         const response = await axios.request(options);
         console.log(response.data);
-
         const url = response.data.data.instrumentResponse.redirectInfo.url;
         return url;
 
@@ -75,9 +86,29 @@ const checkPaymentStatus = async (merchantTransactionId) => {
         const response = await axios.request(options);
 
         if (response.data.success === true) {
+            await Transaction.update(
+                {
+                    status: "Success",
+                },
+                {
+                    where: {
+                        merchantTransactionId: merchantTransactionId,
+                    },
+                }
+            );
 
             return response.data;
         } else {
+            await Transaction.update(
+                {
+                    status: "Failed",
+                },
+                {
+                    where: {
+                        merchantTransactionId: merchantTransactionId,
+                    },
+                }
+            );
             throw new Error("Payment status check failed");
         }
     } catch (error) {

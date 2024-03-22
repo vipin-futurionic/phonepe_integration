@@ -3,7 +3,7 @@ const sequelize = require('sequelize');
 const db = require('../config/database.js');
 
 const Transaction = db.define(
-    'transaction',
+    'transactions',
     {
         merchantId: {
             type: sequelize.STRING
