@@ -1,10 +1,9 @@
 const paymentService = require("../services/paymentServices");
 const validatePayment = require("../validation/paymentValidation"); // Import the validation middleware
-
 const makePayment = async (req, res) => {
   try {
     // Validate the amount field using the middleware
-    await validatePayment(req, res);
+    await validatePayment(req, res, () => {});
 
     // Extract validated amount from request object
     const amount = req.validatedAmount;
