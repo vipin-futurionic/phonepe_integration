@@ -81,7 +81,6 @@ const checkPaymentStatus = async (merchantTransactionId) => {
     };
 
     const response = await axios.request(options);
-
     if (response.data.success === true) {
       await Transaction.update(
         {
