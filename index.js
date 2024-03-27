@@ -13,10 +13,10 @@ db.authenticate()
 
 app.use(express.static("public"));
 app.use(express.json());
-const routes = require("./module/phonePeModule/index.js");
+const paymentRoutes = require("./module/phonePeModule/index.js");
 
 // Use routes
-app.use("/", routes);
+app.use("/", paymentRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at:${port}`);
