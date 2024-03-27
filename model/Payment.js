@@ -12,7 +12,7 @@ const Transaction = db.define("transactions", {
     type: sequelize.STRING,
   },
   amount: {
-    type: sequelize.STRING,
+    type: sequelize.NUMBER,
   },
   paymentStatus: {
     type: sequelize.STRING,
