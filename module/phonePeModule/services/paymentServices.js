@@ -2,8 +2,6 @@ const axios = require("axios");
 const uniqid = require("uniqid");
 const crypto = require("crypto");
 const Transaction = require("../model/Payment");
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 
 const generatePaymentUrl = async (amount) => {
   try {
