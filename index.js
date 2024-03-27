@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 // Database
-const db = require("./config/database");
+const db = require("./module/phonePeModule/config/database.js");
 
 // Test DB
 db.authenticate()
@@ -13,10 +13,10 @@ db.authenticate()
 
 app.use(express.static("public"));
 app.use(express.json());
+const routes = require("./module/phonePeModule/index.js");
 
-app.use("/", require("./routes/root"));
-app.use("/pay", require("./routes/paymentRoutes/paymentRoute"));
-app.use("/redirect-url", require("./routes/paymentRoutes/redirectRoute"));
+// Use routes
+app.use("/", routes);
 
 app.listen(port, () => {
   console.log(`Server running at:${port}`);
