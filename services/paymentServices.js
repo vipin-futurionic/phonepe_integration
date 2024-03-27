@@ -14,7 +14,7 @@ const generatePaymentUrl = async (amount) => {
       merchantId: process.env.MERCHANT_ID,
       merchantTransactionId: merchantTransactionId,
       merchantUserId: process.env.MERCHANT_USER_ID,
-      amount: Math.ceil(amount * 100), // amount should be in INR (INDIAN Rupees) so multiplying it by 100 to make it an integer value of paise (1 INR = 100 paise)
+      amount: amount * 100,
       redirectUrl: `http://localhost:3000/redirect-url/${merchantTransactionId}`,
       redirectMode: "REDIRECT",
       mobileNumber: "9999999999",
@@ -45,8 +45,9 @@ const generatePaymentUrl = async (amount) => {
       merchantId: process.env.MERCHANT_ID,
       merchantTransactionId: merchantTransactionId,
       transactionId: merchantTransactionId,
-      amount: Math.ceil(amount * 100),
-      status: "Pending",
+      amount: amount,
+      paymentStatus: "Pending",
+      paymentJson: {},
     });
 
     const response = await axios.request(options);
@@ -81,10 +82,12 @@ const checkPaymentStatus = async (merchantTransactionId) => {
     };
 
     const response = await axios.request(options);
+
     if (response.data.success === true) {
       await Transaction.update(
         {
-          status: "Success",
+          paymentStatus: "Success",
+          paymentJson: response.data.data,
         },
         {
           where: {
@@ -96,7 +99,10 @@ const checkPaymentStatus = async (merchantTransactionId) => {
       return response.data;
     } else {
       await Transaction.update(
-        { status: "Failed" },
+        {
+          paymentStatus: "Failed",
+          paymentJson: response.data.data,
+        },
         {
           where: {
             merchantTransactionId: merchantTransactionId,

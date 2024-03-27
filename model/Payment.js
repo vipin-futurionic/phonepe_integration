@@ -14,9 +14,18 @@ const Transaction = db.define("transactions", {
   amount: {
     type: sequelize.STRING,
   },
-  status: {
+  paymentStatus: {
     type: sequelize.STRING,
   },
+  paymentJson: {
+    type: sequelize.JSONB,
+  },
+  // createdDate: {
+  //   type: sequelize.DATE,
+  // },
+  // updatedDate: {
+  //   type: sequelize.DATE,
+  // },
 });
 
 module.exports = Transaction;
