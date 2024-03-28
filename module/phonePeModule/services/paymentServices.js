@@ -1,7 +1,7 @@
 const axios = require("axios");
 const uniqid = require("uniqid");
 const crypto = require("crypto");
-const Transaction = require("../model/Payment");
+const Transaction = require("../../../model/Payment");
 
 const generatePaymentUrl = async (amount) => {
   try {

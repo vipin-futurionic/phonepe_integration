@@ -4,7 +4,7 @@ const app = express();
 const port = 3000;
 
 // Database
-const db = require("./module/phonePeModule/config/database.js");
+const db = require("./config/database.js");
 
 // Test DB
 db.authenticate()
